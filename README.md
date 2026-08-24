@@ -1,26 +1,21 @@
-# SimpleShop — Demo E-commerce Frontend
+# Simple Shop — Frontend
 
-This repository contains a simple, static e-commerce frontend you can use as a starting point for a project or for learning. It is intentionally frontend-only and stores the cart in localStorage.
+This repository addition contains a lightweight frontend-only e-commerce demo added to the project. It is intentionally simple and designed to be runnable by opening index.html in a browser.
 
-Files added
-- index.html — main page
-- styles.css — basic responsive styles
-- script.js — frontend logic: load products, cart (localStorage), checkout form
-- products.json — sample product data
+Files added:
+- index.html — main static page
+- styles.css — styling and responsive layout
+- app.js — vanilla JS for loading products, cart, and UI interactions
+- products.json — sample product data (images use picsum.photos)
 
 How to run
-1. Clone the repository (or use GitHub Pages).
-2. Open index.html in your browser. Since this is a static site, no server is required. If you run into CORS when fetching products.json, serve the folder with a simple static server, for example:
+1. Clone the repo or switch to the branch `feature/ecommerce-frontend`.
+2. Open `index.html` in your browser. No build step or server required.
 
-   - Python 3: python -m http.server 8000
-   - Node (http-server): npx http-server
-
-Customization / Next steps
-- Replace products.json with your API endpoints to fetch real products.
-- Hook up a backend for real checkout and payment processing.
-- Improve accessibility and add keyboard navigation to modals and drawer.
-- Replace placeholder images with real product images.
-
-Notes
-- This demo does not process payments — the checkout form is illustrative and clears the cart locally.
-
+Notes & next steps
+- This is frontend-only; cart is stored in localStorage and checkout is a demo alert.
+- To host: enable GitHub Pages on the repo (serve from the branch's root) or deploy to any static host.
+- If you want, I can:
+  - Add product images into the repo instead of external picsum links.
+  - Wire up a simple backend (JSON file served via a tiny Node/Express server).
+  - Create a pull request from the branch into your default branch.

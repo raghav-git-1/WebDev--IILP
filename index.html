@@ -1,97 +1,70 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SimpleShop — Demo E-commerce Frontend</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Simple Shop — Frontend</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <h1 class="logo">SimpleShop</h1>
-      <nav class="main-nav">
-        <a href="#">Home</a>
-        <a href="#products">Products</a>
-        <a href="#about">About</a>
-      </nav>
-      <div class="header-actions">
-        <input id="searchInput" type="search" placeholder="Search products...">
-        <button id="cartBtn" class="cart-btn" aria-label="Open cart">
-          Cart (<span id="cartCount">0</span>)
-        </button>
+      <h1 class="logo">Simple Shop</h1>
+      <div class="controls">
+        <input id="search" placeholder="Search products..." aria-label="Search products">
+        <select id="sort" aria-label="Sort products">
+          <option value="default">Sort</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+        </select>
+        <button id="cart-toggle" aria-expanded="false">Cart (<span id="cart-count">0</span>)</button>
       </div>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <h2>Welcome to SimpleShop</h2>
-        <p>Responsive demo storefront — browse products, add to cart, and try the local checkout.</p>
-      </div>
-    </section>
-
-    <section id="products" class="container products-section">
-      <div class="controls">
-        <label>Sort:
-          <select id="sortSelect">
-            <option value="default">Default</option>
-            <option value="price-asc">Price: Low → High</option>
-            <option value="price-desc">Price: High → Low</option>
-          </select>
-        </label>
-      </div>
-      <div id="productsGrid" class="products-grid" aria-live="polite">
-        <!-- Products injected by JS -->
-      </div>
-    </section>
-
-    <section id="about" class="container about">
-      <h3>About</h3>
-      <p>This is a demo frontend for an e-commerce site. No backend required — cart is stored in localStorage. Use this as a starting point for a real implementation.</p>
-    </section>
+  <main class="container">
+    <section id="products" class="product-grid" aria-live="polite"></section>
   </main>
 
-  <!-- Cart drawer -->
-  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+  <aside id="cart" class="cart">
     <div class="cart-header">
-      <h3>Your Cart</h3>
-      <button id="closeCartBtn" aria-label="Close cart">✕</button>
+      <h2>Your Cart</h2>
+      <button id="close-cart">✕</button>
     </div>
-    <div id="cartItems" class="cart-items">
-      <!-- Items -->
-    </div>
+    <div id="cart-items" class="cart-items"></div>
     <div class="cart-footer">
-      <div class="cart-total">Total: $<span id="cartTotal">0.00</span></div>
-      <button id="checkoutBtn" class="btn primary">Checkout</button>
+      <div class="total">Total: $<span id="cart-total">0.00</span></div>
+      <button id="checkout">Checkout</button>
     </div>
   </aside>
 
-  <!-- Checkout modal -->
-  <div id="checkoutModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="modal-close" id="closeCheckout">✕</button>
-      <h3>Checkout</h3>
-      <form id="checkoutForm">
-        <label>Full name<input name="name" required></label>
-        <label>Email<input type="email" name="email" required></label>
-        <label>Address<textarea name="address" required></textarea></label>
-        <div class="checkout-actions">
-          <button type="submit" class="btn primary">Place Order</button>
-          <button type="button" class="btn" id="cancelCheckout">Cancel</button>
+  <div id="overlay" class="overlay" hidden></div>
+
+  <template id="product-template">
+    <article class="product">
+      <img class="product-image" alt="">
+      <div class="product-body">
+        <h3 class="product-title"></h3>
+        <p class="product-price"></p>
+        <div class="product-actions">
+          <button class="btn btn-add">Add to cart</button>
+          <button class="btn btn-details">Details</button>
         </div>
-      </form>
-      <div id="orderResult" class="order-result" hidden></div>
+      </div>
+    </article>
+  </template>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close">✕</button>
+      <img id="modal-image" alt="" class="modal-image">
+      <h2 id="modal-title"></h2>
+      <p id="modal-price"></p>
+      <p id="modal-description"></p>
+      <button id="modal-add" class="btn">Add to cart</button>
     </div>
   </div>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>© SimpleShop — Demo frontend. No payments are processed.</p>
-    </div>
-  </footer>
-
-  <script src="script.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
