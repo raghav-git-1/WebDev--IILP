@@ -1,0 +1,10 @@
+[
+  { "id": 1, "name": "Vintage Backpack", "price": 79.99, "description": "Sturdy canvas backpack — great for everyday use.", "image": "https://picsum.photos/seed/1/600/400" },
+  { "id": 2, "name": "Leather Wallet", "price": 34.50, "description": "Slim leather wallet with multiple card slots.", "image": "https://picsum.photos/seed/2/600/400" },
+  { "id": 3, "name": "Noise-Cancelling Headphones", "price": 199.00, "description": "Over-ear wireless headphones with noise cancellation.", "image": "https://picsum.photos/seed/3/600/400" },
+  { "id": 4, "name": "Classic Sunglasses", "price": 49.99, "description": "UV-protective sunglasses with a timeless frame.", "image": "https://picsum.photos/seed/4/600/400" },
+  { "id": 5, "name": "Running Shoes", "price": 129.99, "description": "Lightweight running shoes with breathable knit upper.", "image": "https://picsum.photos/seed/5/600/400" },
+  { "id": 6, "name": "Smart Watch", "price": 249.99, "description": "Track activity, notifications, and health metrics.", "image": "https://picsum.photos/seed/6/600/400" },
+  { "id": 7, "name": "Desk Lamp", "price": 39.00, "description": "Adjustable LED desk lamp with warm/cool modes.", "image": "https://picsum.photos/seed/7/600/400" },
+  { "id": 8, "name": "Water Bottle", "price": 19.99, "description": "Insulated stainless steel bottle keeps drinks cold.", "image": "https://picsum.photos/seed/8/600/400" }
+]

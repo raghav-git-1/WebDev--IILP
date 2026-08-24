@@ -1,488 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do Application</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 500px;
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 30px 20px;
-            text-align: center;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 0.9em;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        .input-section {
-            padding: 25px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-            background-color: #f9f9ff;
-        }
-
-        button {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .filter-buttons button {
-            flex: 1;
-            min-width: 80px;
-            padding: 8px 12px;
-            font-size: 0.85em;
-            background: #f0f0f0;
-            color: #333;
-        }
-
-        .filter-buttons button.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .todos-section {
-            padding: 20px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .todos-section::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .todos-section::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .todos-section::-webkit-scrollbar-thumb {
-            background: #667eea;
-            border-radius: 10px;
-        }
-
-        .todos-section::-webkit-scrollbar-thumb:hover {
-            background: #764ba2;
-        }
-
-        .todo-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
-            border-left: 4px solid #667eea;
-        }
-
-        .todo-item:hover {
-            background: #f0f0f0;
-            transform: translateX(5px);
-        }
-
-        .todo-item.completed {
-            opacity: 0.6;
-            border-left-color: #4caf50;
-        }
-
-        .todo-item.completed .todo-text {
-            text-decoration: line-through;
-            color: #999;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: #667eea;
-        }
-
-        .todo-text {
-            flex: 1;
-            font-size: 1em;
-            color: #333;
-            word-break: break-word;
-        }
-
-        .todo-priority {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75em;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .priority-high {
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        .priority-medium {
-            background: #fff3e0;
-            color: #e65100;
-        }
-
-        .priority-low {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .delete-btn {
-            padding: 6px 12px;
-            background: #ff5252;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.85em;
-            transition: background 0.3s ease;
-        }
-
-        .delete-btn:hover {
-            background: #ff1744;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #999;
-        }
-
-        .empty-state svg {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-
-        .footer {
-            padding: 15px 20px;
-            background: #f9f9f9;
-            border-top: 2px solid #f0f0f0;
-            text-align: center;
-            color: #999;
-            font-size: 0.9em;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-        }
-
-        .stat {
-            flex: 1;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .stat-label {
-            font-size: 0.8em;
-            color: #999;
-            margin-top: 3px;
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            .container {
-                border-radius: 10px;
-            }
-
-            .input-group {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SimpleShop — Demo E-commerce Frontend</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>📝 My Tasks</h1>
-            <p>Stay organized and productive</p>
-        </div>
-
-        <!-- Input Section -->
-        <div class="input-section">
-            <div class="input-group">
-                <input 
-                    type="text" 
-                    id="todoInput" 
-                    placeholder="Add a new task..."
-                    autocomplete="off"
-                >
-                <select id="prioritySelect" style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1em;">
-                    <option value="low">Low</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="high">High</option>
-                </select>
-                <button onclick="addTodo()">Add</button>
-            </div>
-
-            <div class="filter-buttons">
-                <button class="active" onclick="filterTodos('all')">All</button>
-                <button onclick="filterTodos('active')">Active</button>
-                <button onclick="filterTodos('completed')">Done</button>
-            </div>
-        </div>
-
-        <!-- Todos Section -->
-        <div class="todos-section" id="todosContainer">
-            <div class="empty-state">
-                <p>✨ No tasks yet. Create one to get started!</p>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-number" id="totalCount">0</div>
-                    <div class="stat-label">Total</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number" id="activeCount">0</div>
-                    <div class="stat-label">Active</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number" id="completedCount">0</div>
-                    <div class="stat-label">Done</div>
-                </div>
-            </div>
-        </div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="logo">SimpleShop</h1>
+      <nav class="main-nav">
+        <a href="#">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="header-actions">
+        <input id="searchInput" type="search" placeholder="Search products...">
+        <button id="cartBtn" class="cart-btn" aria-label="Open cart">
+          Cart (<span id="cartCount">0</span>)
+        </button>
+      </div>
     </div>
+  </header>
 
-    <script>
-        let todos = [];
-        let currentFilter = 'all';
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h2>Welcome to SimpleShop</h2>
+        <p>Responsive demo storefront — browse products, add to cart, and try the local checkout.</p>
+      </div>
+    </section>
 
-        // Load todos from localStorage
-        function loadTodos() {
-            const saved = localStorage.getItem('todos');
-            if (saved) {
-                todos = JSON.parse(saved);
-                renderTodos();
-            }
-        }
+    <section id="products" class="container products-section">
+      <div class="controls">
+        <label>Sort:
+          <select id="sortSelect">
+            <option value="default">Default</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+          </select>
+        </label>
+      </div>
+      <div id="productsGrid" class="products-grid" aria-live="polite">
+        <!-- Products injected by JS -->
+      </div>
+    </section>
 
-        // Save todos to localStorage
-        function saveTodos() {
-            localStorage.setItem('todos', JSON.stringify(todos));
-        }
+    <section id="about" class="container about">
+      <h3>About</h3>
+      <p>This is a demo frontend for an e-commerce site. No backend required — cart is stored in localStorage. Use this as a starting point for a real implementation.</p>
+    </section>
+  </main>
 
-        // Add new todo
-        function addTodo() {
-            const input = document.getElementById('todoInput');
-            const priority = document.getElementById('prioritySelect').value;
-            const text = input.value.trim();
+  <!-- Cart drawer -->
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button id="closeCartBtn" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items">
+      <!-- Items -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: $<span id="cartTotal">0.00</span></div>
+      <button id="checkoutBtn" class="btn primary">Checkout</button>
+    </div>
+  </aside>
 
-            if (text === '') {
-                alert('Please enter a task!');
-                return;
-            }
+  <!-- Checkout modal -->
+  <div id="checkoutModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" id="closeCheckout">✕</button>
+      <h3>Checkout</h3>
+      <form id="checkoutForm">
+        <label>Full name<input name="name" required></label>
+        <label>Email<input type="email" name="email" required></label>
+        <label>Address<textarea name="address" required></textarea></label>
+        <div class="checkout-actions">
+          <button type="submit" class="btn primary">Place Order</button>
+          <button type="button" class="btn" id="cancelCheckout">Cancel</button>
+        </div>
+      </form>
+      <div id="orderResult" class="order-result" hidden></div>
+    </div>
+  </div>
 
-            const todo = {
-                id: Date.now(),
-                text: text,
-                completed: false,
-                priority: priority,
-                createdAt: new Date().toLocaleString()
-            };
+  <footer class="site-footer">
+    <div class="container">
+      <p>© SimpleShop — Demo frontend. No payments are processed.</p>
+    </div>
+  </footer>
 
-            todos.push(todo);
-            saveTodos();
-            input.value = '';
-            document.getElementById('prioritySelect').value = 'medium';
-            renderTodos();
-            input.focus();
-        }
-
-        // Toggle todo completion
-        function toggleTodo(id) {
-            const todo = todos.find(t => t.id === id);
-            if (todo) {
-                todo.completed = !todo.completed;
-                saveTodos();
-                renderTodos();
-            }
-        }
-
-        // Delete todo
-        function deleteTodo(id) {
-            todos = todos.filter(t => t.id !== id);
-            saveTodos();
-            renderTodos();
-        }
-
-        // Filter todos
-        function filterTodos(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-buttons button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            renderTodos();
-        }
-
-        // Get filtered todos
-        function getFilteredTodos() {
-            switch (currentFilter) {
-                case 'active':
-                    return todos.filter(t => !t.completed);
-                case 'completed':
-                    return todos.filter(t => t.completed);
-                default:
-                    return todos;
-            }
-        }
-
-        // Render todos
-        function renderTodos() {
-            const container = document.getElementById('todosContainer');
-            const filtered = getFilteredTodos();
-
-            if (filtered.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>✨ No tasks to show!</p></div>';
-            } else {
-                container.innerHTML = filtered.map(todo => `
-                    <div class="todo-item ${todo.completed ? 'completed' : ''}">
-                        <input 
-                            type="checkbox" 
-                            ${todo.completed ? 'checked' : ''} 
-                            onchange="toggleTodo(${todo.id})"
-                        >
-                        <span class="todo-text">${escapeHtml(todo.text)}</span>
-                        <span class="todo-priority priority-${todo.priority}">${todo.priority}</span>
-                        <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
-                    </div>
-                `).join('');
-            }
-
-            updateStats();
-        }
-
-        // Update statistics
-        function updateStats() {
-            const total = todos.length;
-            const active = todos.filter(t => !t.completed).length;
-            const completed = todos.filter(t => t.completed).length;
-
-            document.getElementById('totalCount').textContent = total;
-            document.getElementById('activeCount').textContent = active;
-            document.getElementById('completedCount').textContent = completed;
-        }
-
-        // Escape HTML special characters
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, m => map[m]);
-        }
-
-        // Add Enter key support
-        document.getElementById('todoInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                addTodo();
-            }
-        });
-
-        // Initialize on page load
-        window.addEventListener('load', loadTodos);
-    </script>
+  <script src="script.js" defer></script>
 </body>
 </html>
